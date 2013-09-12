@@ -34,12 +34,40 @@ void doSomething() {
 
 void changeSomething(float x, float y) {
   refresh = (int)(x * 30);
-  
+
 //  if(y something something something) {
 //    something 
 //  }
 
 }
+
+void triangoRecursoLeft(int y) {
+  if (y > height) {
+    return;
+  } else {
+    beginShape();
+    vertex(0, y);
+    vertex(30, y+30);
+    vertex(0, y+60);
+    vertex(0, y);
+    endShape();
+    triangoRecursoLeft(y+60);
+  }
+}
+void triangoRecursoRight(int y) {
+  if (y > 2*height) {
+    return;
+  } else {
+    beginShape();
+    vertex(width, y);
+    vertex(width-30, y+30);
+    vertex(width, y+60);
+    vertex(width, y);
+    endShape();
+    triangoRecursoRight(y+60);
+  }
+}
+
 
 void draw() {
   lights();
@@ -47,6 +75,15 @@ void draw() {
   if (ticker >= refresh) {
     shape.regen();
     ticker = 0;
+  } else {
+    int y = frameCount % height;
+    pushStyle();
+    fill(255, 0, 0);
+    triangoRecursoLeft(y-height);
+    triangoRecursoRight(y-height);
+    
+    popStyle();
+    
   }
 
   
